@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiajia.cover.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.jiajia.cover.entity.Product">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="prd_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="prd_desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="server_ip" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="server_port" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="createtime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="updatetime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, prd_name, prd_desc, server_ip, server_port, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cover_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="queryAllProduct" resultType="com.jiajia.cover.entity.Product">
+      select <include refid="Base_Column_List"></include>
+      from cover_product
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cover_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jiajia.cover.entity.Product">
+    insert into cover_product (id, prd_name, prd_desc, 
+      server_ip, server_port, createtime, 
+      updatetime)
+    values (#{id,jdbcType=INTEGER}, #{prdName,jdbcType=VARCHAR}, #{prdDesc,jdbcType=VARCHAR}, 
+      #{serverIp,jdbcType=VARCHAR}, #{serverPort,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jiajia.cover.entity.Product">
+    insert into cover_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="prdName != null">
+        prd_name,
+      </if>
+      <if test="prdDesc != null">
+        prd_desc,
+      </if>
+      <if test="serverIp != null">
+        server_ip,
+      </if>
+      <if test="serverPort != null">
+        server_port,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prdName != null">
+        #{prdName,jdbcType=VARCHAR},
+      </if>
+      <if test="prdDesc != null">
+        #{prdDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="serverIp != null">
+        #{serverIp,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null">
+        #{serverPort,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiajia.cover.entity.Product">
+    update cover_product
+    <set>
+      <if test="prdName != null">
+        prd_name = #{prdName,jdbcType=VARCHAR},
+      </if>
+      <if test="prdDesc != null">
+        prd_desc = #{prdDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="serverIp != null">
+        server_ip = #{serverIp,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null">
+        server_port = #{serverPort,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiajia.cover.entity.Product">
+    update cover_product
+    set prd_name = #{prdName,jdbcType=VARCHAR},
+      prd_desc = #{prdDesc,jdbcType=VARCHAR},
+      server_ip = #{serverIp,jdbcType=VARCHAR},
+      server_port = #{serverPort,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

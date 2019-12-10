@@ -1,0 +1,22 @@
+server:
+  port: 8111
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://49.234.63.77:3306/covv?characterEncoding=utf-8
+    username: root
+    password: Shiqilin@1203
+    driver-class-name: com.mysql.jdbc.Driver
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    check-template-location: true
+    cache: false
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML5
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.jiajia.cover.entity  # 注意：对应实体类的路径

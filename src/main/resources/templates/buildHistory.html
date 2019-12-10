@@ -1,0 +1,127 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script type="text/javascript" th:src="@{/static/js/common.js}"></script>
+    <script type="text/javascript" th:src="@{/static/js/mangosteen.js}"></script>
+
+</head>
+<body>
+
+
+    <div th:fragment="buildHistory" class="card">
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="au-breadcrumb-content">
+                    <div class="au-breadcrumb-left">
+                        <h3 style="color:#7A746F">
+                            &emsp;&emsp;<i class="fa fa-table"></i>
+                            历史记录</h3>
+                    </div>
+            <form class="form-header" th:action="@{/project/queryHistory}" method="post">
+           <input class="au-input au-input--xl" type="text" id="branch" name="branch" th:value="${branch}" placeholder="输入分支名称进行搜索">
+            <input  type="hidden" name="projectName" id="projectName" th:value="${projectName}">
+            <button class="au-btn--submit" type="submit">
+                <i class="zmdi zmdi-search"></i>
+            </button>
+            </form>
+                </div>
+            </div>
+        </div>
+        <div id="histroylog-container" th:title="过程日志">
+            <div></div>
+        </div>
+
+        <div class="top-campaign">
+
+            <hr style="height:1px;border:none;border-top: 2px ridge #c8ccc84a;" />
+            <div class="table-responsive">
+                <table class="table table-top-campaign" style="table-layout: fixed" width="100%">
+                    <thead>
+                    <tr th:if="${!#lists.isEmpty(executeRecords)}">
+                        <th width="45%" style="text-align:center;">分支</th>
+                        <th width="15%" style="text-align:center;">执行时间</th>
+                        <th width="20%" style="text-align:center;">IP</th>
+                        <th style="text-align:center;">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="executeRecord:${executeRecords}">
+                        <input  type="hidden" name="reportPath" th:value="${executeRecord.reportPath}">
+                        <input  type="hidden" name="projectName" th:value="${executeRecord.projectName}">
+                        <td th:text="${executeRecord.codeBranch}" width="45%"></td>
+                        <td th:text="${#dates.format(executeRecord.executeTime, 'yyyy-MM-dd HH:mm:ss')}" width="15%"></td>
+                        <td th:text="${executeRecord.serverIp}" width="20%"></td>
+                        <td class="process" >
+                            <button type="button" class="btn btn-success btn-sm" th:onclick="'javascript:toReportDetail(this)'">查看覆盖率</button>
+                            <button type="button" class="btn btn-warning btn-sm" th:onclick="'javascript:histroylog(this)'">查看日志</button>
+
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(executeRecords)}">
+                        <div style="text-align:center;color: #F00;">未查到相关记录</div>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <hr style="height:5px;border:none;border-top: 2px ridge #c8ccc84a;" />
+
+            <div style="margin: auto;text-align: center" >
+                <ul class="pagination" th:if="${pageCount}!=0">
+                    <li><a th:text="'共'+${pageCount}+'条数据'"></a></li>
+                    <li><a href="#" th:onclick="'javascript:turning(1)'">&laquo;</a></li>
+                    <li th:each="i:${#numbers.sequence(1,pageTime)}">
+                        <a href="#" th:onclick="'javascript:turning('+${i}+')'" th:text="${i}"></a>
+                    </li>
+                    <li><a href="#" th:onclick="'javascript:turning('+${pageTime}+')'">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+       <!--
+
+        <div>
+            <div class="card-header">
+                <strong>历史记录</strong>
+            </div>
+
+
+            <div class="table-responsive m-b-40">
+                <table class="table table-borderless table-data3">
+                    <tbody>
+                    <tr th:if="${!#lists.isEmpty(executeRecords)}">
+                        <th>分支</th>
+                        <th>执行时间</th>
+                        <th>IP</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr th:each="executeRecord:${executeRecords}">
+                        <input  type="hidden" name="reportPath" th:value="${executeRecord.reportPath}">
+                        <input  type="hidden" name="projectName" th:value="${executeRecord.projectName}">
+                        <td th:text="${executeRecord.codeBranch}"></td>
+                        <td th:text="${#dates.format(executeRecord.executeTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                        <td th:text="${executeRecord.serverIp}"></td>
+                        <td class="process" >
+                            <button type="button" class="btn btn-link" th:onclick="'javascript:toReportDetail(this)'">查看覆盖率</button>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(executeRecords)}">
+                        <div style="text-align:center;color: #F00;">当前项目没有历史记录！</div>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        -->
+
+
+    </div>
+</body>
+
+</html>
